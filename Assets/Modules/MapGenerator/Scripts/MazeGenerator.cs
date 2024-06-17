@@ -8,14 +8,14 @@ namespace Modules.MapGenerator.Scripts
 {
   public class MazeGenerator : MonoBehaviour
   {
+    // Inject serialize field in future
     [SerializeField] [Range(1, 30)] private int _mazeSizeX;
     [SerializeField] [Range(1, 30)] private int _mazeSizeY;
+    
+    [SerializeField] private MazeTileFactory _mazeTileFactory;
 
-    [SerializeField] private Vector2 _tileSize;
-    [SerializeField] private MazeTileView mazeTileViewPrefab;
-    [SerializeField] private Transform _mazeParent;
-
-
+    
+    
     private MazeTileModel[][] _mazeTiles;
 
     private MazeTileModel _currentTileModel;
@@ -26,17 +26,18 @@ namespace Modules.MapGenerator.Scripts
     private void Awake()
     {
       CreateTileModels();
-      DrawTiles();
+      GenerateMaze();
     }
 
     private void Start()
     {
-      GenerateMaze();
+      DrawTiles();
     }
 
     private void GenerateMaze()
     {
       _currentTileModel = _mazeTiles[0][0];
+      _currentTileModel.IsStart = true;
       _path.Push(_currentTileModel);
 
       while (_path.Count > 0)
@@ -66,6 +67,7 @@ namespace Modules.MapGenerator.Scripts
         if (_mazeTiles[0][j].TilesFromStart > furthest.TilesFromStart)
           furthest = _mazeTiles[0][j];
       }
+      furthest.IsFinish = true;
     }
 
     private void MakeStep()
@@ -83,8 +85,8 @@ namespace Modules.MapGenerator.Scripts
         if (!_currentTileModel.IsVisited)
           _currentTileModel.TilesFromStart = _prevTileModel.TilesFromStart + 1;
         
-        _prevTileModel.SetWallVisibility(direction);
-        _currentTileModel.SetWallVisibility(GetOppositeDirection(direction));
+        _prevTileModel.CurrentDisabledWalls  = direction;
+        _currentTileModel.CurrentDisabledWalls = GetOppositeDirection(direction);
       }
 
       MoveToNextTile();
@@ -222,13 +224,12 @@ namespace Modules.MapGenerator.Scripts
 
     private void DrawTiles()
     {
+      
       for (int i = 0; i < _mazeTiles.Length; i++)
       {
         for (int j = 0; j < _mazeTiles[i].Length; j++)
         {
-          MazeTileView tileView = Instantiate(mazeTileViewPrefab, _mazeParent);
-          tileView.Init(_mazeTiles[i][j]);
-          tileView.transform.localPosition = new Vector2(i * _tileSize.x, j * _tileSize.y);
+          _mazeTileFactory.SpawnTileView(_mazeTiles[i][j]);
         }
       }
     }

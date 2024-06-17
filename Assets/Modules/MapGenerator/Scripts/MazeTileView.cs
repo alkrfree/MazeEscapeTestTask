@@ -16,7 +16,7 @@ namespace Modules.MapGenerator.Scripts
     public void Init(MazeTileModel mazeTileModel)
     {
       _mazeTileModel = mazeTileModel;
-      _mazeTileModel.DisableWallsDirection += DrawWalls;
+      DrawWalls(_mazeTileModel.CurrentDisabledWalls);
     }
 
     private void DrawWalls(MazeTileModel.Direction direction)
