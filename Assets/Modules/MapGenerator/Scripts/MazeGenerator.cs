@@ -21,7 +21,7 @@ namespace Modules.MapGenerator.Scripts
     private MazeTileModel _currentTileModel;
     private MazeTileModel _prevTileModel;
 
-    private List<MazeTileModel> _pathDebug = new List<MazeTileModel>();
+    private Stack<MazeTileModel> _path = new Stack<MazeTileModel>();
 
     private void Awake()
     {
@@ -37,56 +37,98 @@ namespace Modules.MapGenerator.Scripts
     private void GenerateMaze()
     {
       _currentTileModel = _mazeTiles[0][0];
-      _pathDebug.Add(_currentTileModel);
-      for (int i = 0; i < 10; i++)
+      _path.Push(_currentTileModel);
+
+      while (_path.Count > 0)
         MakeStep();
 
-      for (int i = 0; i < _pathDebug.Count; i++)
-        Debug.LogError("_path[i].TileCoords = " + _pathDebug[i].TileCoords);
+      SetFinishTile();
     }
 
-    private void MakeStep() // refactor
+    private void SetFinishTile()
     {
-      MazeTileModel.Direction direction = MazeTileModel.Direction.None;
-      if (_prevTileModel != null && _currentTileModel != null)
+      MazeTileModel furthest = _mazeTiles[0][0];
+
+      for (int i = 0; i < _mazeTiles.Length; i++)
       {
-        direction = GetDirectionBetweenTiles(_prevTileModel, _currentTileModel);
-        _prevTileModel.IsVisited = true;
-        _prevTileModel.SetWallVisibility(direction);
+        if (_mazeTiles[i][_mazeSizeY - 1].TilesFromStart > furthest.TilesFromStart)
+          furthest = _mazeTiles[i][_mazeSizeY - 1];
 
-        MazeTileModel.Direction oppositeDirection = MazeTileModel.Direction.None;
-
-        if (direction == MazeTileModel.Direction.Left)
-          oppositeDirection = MazeTileModel.Direction.Right;
-
-        if (direction == MazeTileModel.Direction.Right)
-          oppositeDirection = MazeTileModel.Direction.Left;
-
-        if (direction == MazeTileModel.Direction.Up)
-          oppositeDirection = MazeTileModel.Direction.Down;
-
-        if (direction == MazeTileModel.Direction.Down)
-          oppositeDirection = MazeTileModel.Direction.Up;
-
-        _currentTileModel.SetWallVisibility(oppositeDirection);
+        if (_mazeTiles[i][0].TilesFromStart > furthest.TilesFromStart)
+          furthest = _mazeTiles[i][0];
       }
 
+      for (int j = 0; j < _mazeTiles[0].Length; j++)
+      {
+        if (_mazeTiles[_mazeSizeX - 1][j].TilesFromStart > furthest.TilesFromStart)
+          furthest = _mazeTiles[_mazeSizeX - 1][j];
+
+        if (_mazeTiles[0][j].TilesFromStart > furthest.TilesFromStart)
+          furthest = _mazeTiles[0][j];
+      }
+    }
+
+    private void MakeStep()
+    {
+      if (_prevTileModel != null && _currentTileModel != null)
+      {
+        MazeTileModel.Direction direction = GetDirectionBetweenTiles(_prevTileModel, _currentTileModel);
+        _prevTileModel.IsVisited = true;
+        if (direction == MazeTileModel.Direction.None)
+        {
+          TryToMoveBack();
+          return;
+        }
+
+        if (!_currentTileModel.IsVisited)
+          _currentTileModel.TilesFromStart = _prevTileModel.TilesFromStart + 1;
+        
+        _prevTileModel.SetWallVisibility(direction);
+        _currentTileModel.SetWallVisibility(GetOppositeDirection(direction));
+      }
 
       MoveToNextTile();
     }
 
-    private MazeTileModel.Direction GetDirectionBetweenTiles(MazeTileModel fromTileModel, MazeTileModel nextTileModel)
+    private MazeTileModel.Direction GetOppositeDirection(MazeTileModel.Direction direction)
     {
-      if (fromTileModel.TileCoords.x > nextTileModel.TileCoords.x)
+      MazeTileModel.Direction oppositeDirection = MazeTileModel.Direction.None;
+
+      if (direction == MazeTileModel.Direction.Left)
+        oppositeDirection = MazeTileModel.Direction.Right;
+
+      if (direction == MazeTileModel.Direction.Right)
+        oppositeDirection = MazeTileModel.Direction.Left;
+
+      if (direction == MazeTileModel.Direction.Up)
+        oppositeDirection = MazeTileModel.Direction.Down;
+
+      if (direction == MazeTileModel.Direction.Down)
+        oppositeDirection = MazeTileModel.Direction.Up;
+      return oppositeDirection;
+    }
+
+    private void TryToMoveBack()
+    {
+      if (_path.TryPop(out MazeTileModel tileModel))
+      {
+        _currentTileModel = tileModel;
+        MakeStep();
+      }
+    }
+
+    private MazeTileModel.Direction GetDirectionBetweenTiles(MazeTileModel fromTileModel, MazeTileModel toTileModel)
+    {
+      if (fromTileModel.TileCoords.x > toTileModel.TileCoords.x)
         return MazeTileModel.Direction.Left;
 
-      if (fromTileModel.TileCoords.x < nextTileModel.TileCoords.x)
+      if (fromTileModel.TileCoords.x < toTileModel.TileCoords.x)
         return MazeTileModel.Direction.Right;
 
-      if (fromTileModel.TileCoords.y > nextTileModel.TileCoords.y)
+      if (fromTileModel.TileCoords.y > toTileModel.TileCoords.y)
         return MazeTileModel.Direction.Down;
 
-      if (fromTileModel.TileCoords.y < nextTileModel.TileCoords.y)
+      if (fromTileModel.TileCoords.y < toTileModel.TileCoords.y)
         return MazeTileModel.Direction.Up;
 
       return MazeTileModel.Direction.None;
@@ -94,9 +136,18 @@ namespace Modules.MapGenerator.Scripts
 
     private void MoveToNextTile()
     {
-      List<MazeTileModel.Direction> validCoords = new List<MazeTileModel.Direction>();
-
       Vector2Int currentCords = _currentTileModel.TileCoords;
+
+      List<MazeTileModel.Direction> validCoords = GetValidCoordsForNextStep(currentCords);
+
+      _prevTileModel = _currentTileModel;
+      _currentTileModel = GetTileCoordsOnDirection(GetRandomTargetDirection(validCoords));
+      _path.Push(_currentTileModel);
+    }
+
+    private List<MazeTileModel.Direction> GetValidCoordsForNextStep(Vector2Int currentCords)
+    {
+      List<MazeTileModel.Direction> validCoords = new List<MazeTileModel.Direction>();
 
       if (IsCoordsValidForStep(currentCords.x, currentCords.y - 1))
         validCoords.Add(MazeTileModel.Direction.Down);
@@ -110,9 +161,7 @@ namespace Modules.MapGenerator.Scripts
       if (IsCoordsValidForStep(currentCords.x + 1, currentCords.y))
         validCoords.Add(MazeTileModel.Direction.Right);
 
-      _prevTileModel = _currentTileModel;
-      _currentTileModel = GetTileCoordsOnDirection(GetRandomTargetDirection(validCoords));
-      _pathDebug.Add(_currentTileModel);
+      return validCoords;
     }
 
     private bool IsCoordsValidForStep(int x, int y)
@@ -129,7 +178,7 @@ namespace Modules.MapGenerator.Scripts
       x < 0 || y < 0 || x >= _mazeSizeX || y >= _mazeSizeY;
 
 
-    private MazeTileModel GetTileCoordsOnDirection(MazeTileModel.Direction targetDirection) // refactor
+    private MazeTileModel GetTileCoordsOnDirection(MazeTileModel.Direction targetDirection)
     {
       Vector2Int nextCellCoords = _currentTileModel.TileCoords;
       switch (targetDirection)
@@ -151,7 +200,7 @@ namespace Modules.MapGenerator.Scripts
       return _mazeTiles[nextCellCoords.x][nextCellCoords.y];
     }
 
-    private static MazeTileModel.Direction GetRandomTargetDirection(List<MazeTileModel.Direction> validCoords)
+    private MazeTileModel.Direction GetRandomTargetDirection(List<MazeTileModel.Direction> validCoords)
     {
       if (validCoords.Count > 0)
         return validCoords[Random.Range(0, validCoords.Count)];
@@ -183,6 +232,5 @@ namespace Modules.MapGenerator.Scripts
         }
       }
     }
-
   }
 }

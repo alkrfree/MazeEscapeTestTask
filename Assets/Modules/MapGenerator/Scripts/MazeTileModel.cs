@@ -12,15 +12,17 @@ namespace Modules.MapGenerator.Scripts
     public enum Direction
     {
       None = 0,
-      Up = 1 << 0, // 1
-      Down = 1 << 1, // 2
-      Right = 1 << 2, // 4
-      Left = 1 << 3 // 8
+      Up = 1 << 0, 
+      Down = 1 << 1, 
+      Right = 1 << 2, 
+      Left = 1 << 3, 
+      Start = 1 << 4, 
+      End = 1 << 5,
     }
 
     public Vector2Int TileCoords { get; }
-    public bool IsDeadEnd { get; set; }
     public bool IsVisited { get; set; }
+    public int TilesFromStart { get; set; }
 
     private Direction _currentDisabledWalls;
     
@@ -35,6 +37,5 @@ namespace Modules.MapGenerator.Scripts
       _currentDisabledWalls |= wallDirection;
       DisableWallsDirection?.Invoke(_currentDisabledWalls);
     }
-
   }
 }
