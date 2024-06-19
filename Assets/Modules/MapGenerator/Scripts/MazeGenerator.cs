@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Modules.MapGenerator.Scripts
@@ -12,7 +13,7 @@ namespace Modules.MapGenerator.Scripts
     [SerializeField] [Range(1, 30)] private int _mazeSizeX;
     [SerializeField] [Range(1, 30)] private int _mazeSizeY;
     
-    [SerializeField] private MazeTileFactory _mazeTileFactory;
+    private MazeTileFactory _mazeTileFactory;
 
     
     
@@ -23,6 +24,11 @@ namespace Modules.MapGenerator.Scripts
 
     private Stack<MazeTileModel> _path = new Stack<MazeTileModel>();
 
+    [Inject]
+    private void Construct(MazeTileFactory mazeTileFactory)
+    {
+      _mazeTileFactory = mazeTileFactory;
+    }
     private void Awake()
     {
       CreateTileModels();
@@ -229,7 +235,7 @@ namespace Modules.MapGenerator.Scripts
       {
         for (int j = 0; j < _mazeTiles[i].Length; j++)
         {
-          _mazeTileFactory.SpawnTileView(_mazeTiles[i][j]);
+          _mazeTileFactory.Create(_mazeTiles[i][j]);
         }
       }
     }
