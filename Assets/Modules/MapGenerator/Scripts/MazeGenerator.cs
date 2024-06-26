@@ -43,7 +43,7 @@ namespace Modules.MapGenerator.Scripts
     private void GenerateMaze()
     {
       _currentTileModel = _mazeTiles[0][0];
-      _currentTileModel.IsStart = true;
+      _currentTileModel.Tile = MazeTileModel.TileType.Start;
       _path.Push(_currentTileModel);
 
       while (_path.Count > 0)
@@ -73,7 +73,7 @@ namespace Modules.MapGenerator.Scripts
         if (_mazeTiles[0][j].TilesFromStart > furthest.TilesFromStart)
           furthest = _mazeTiles[0][j];
       }
-      furthest.IsFinish = true;
+      furthest.Tile = MazeTileModel.TileType.Finish;
     }
 
     private void MakeStep()
@@ -235,7 +235,7 @@ namespace Modules.MapGenerator.Scripts
       {
         for (int j = 0; j < _mazeTiles[i].Length; j++)
         {
-          _mazeTileFactory.Create(_mazeTiles[i][j]);
+          _mazeTileFactory.Spawn(_mazeTiles[i][j]);
         }
       }
     }

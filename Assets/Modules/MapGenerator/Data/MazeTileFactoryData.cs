@@ -6,9 +6,9 @@ namespace Modules.MapGenerator.Data
   [CreateAssetMenu(fileName = "MazeTileFactoryAttributes", menuName = "MazeGenerator/MazeTileFactoryAttributes", order = 0)]
   public class MazeTileFactoryAttributes : ScriptableObject
   {
-    public MazeTileView MazeTileViewPrefab;
-    public MazeTileView MazeTileViewStartPrefab;
-    public MazeTileView MazeTileViewFinishPrefab;
-    public Vector2 TileSize;
+    public MazeTileView mazeTileViewPrefab;
+    public MazeTileView mazeTileViewStartPrefab;
+    public MazeTileView mazeTileViewFinishPrefab;
+    public Vector2 TileSize; // refactor
   }
 }

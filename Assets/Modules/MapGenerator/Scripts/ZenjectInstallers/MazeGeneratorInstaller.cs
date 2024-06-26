@@ -15,7 +15,6 @@ public class MazeGeneratorInstaller : MonoInstaller
 
   private void BindMazeTileFactory()
   {
-    Container.BindFactory<MazeTileModel, MazeTileView, MazeTileFactory>()
-      .FromIFactory(b => b.To<CustomMazeTileFactory>().AsSingle().WithArguments(_mazeTileFactoryAttributes,_mazeParent));
+    Container.Bind<MazeTileFactory>().FromNew().AsSingle().WithArguments(_mazeTileFactoryAttributes, _mazeParent);
   }
 }
