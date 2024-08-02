@@ -20,7 +20,7 @@ namespace CodeBase.Logic
     
     public void Hide() => StartCoroutine(DoFadeIn());
     
-    private IEnumerator DoFadeIn()
+    private IEnumerator DoFadeIn() // TODO move fade settings to Scriptable object
     {
       while (Curtain.alpha > 0)
       {
