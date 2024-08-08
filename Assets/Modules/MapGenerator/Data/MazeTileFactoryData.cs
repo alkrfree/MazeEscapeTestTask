@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Modules.MapGenerator.Data
 {
-  [CreateAssetMenu(fileName = "MazeTileFactoryAttributes", menuName = "MazeGenerator/MazeTileFactoryAttributes", order = 0)]
-  public class MazeTileFactoryAttributes : ScriptableObject
+  [CreateAssetMenu(fileName = "MazeTileFactoryAttributes", menuName = "MazeGenerator/MazeTileFactoryAttributes", order = 1)]
+  public class MazeTileFactoryData : ScriptableObject
   {
     public MazeTileView mazeTileViewPrefab;
     public MazeTileView mazeTileViewStartPrefab;

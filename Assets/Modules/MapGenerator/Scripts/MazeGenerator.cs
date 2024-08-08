@@ -7,16 +7,13 @@ using Random = UnityEngine.Random;
 
 namespace Modules.MapGenerator.Scripts
 {
-  public class MazeGenerator : MonoBehaviour
+  public class MazeGenerator 
   {
-    // Inject serialize field in future
-    [SerializeField] [Range(1, 30)] private int _mazeSizeX;
-    [SerializeField] [Range(1, 30)] private int _mazeSizeY;
+    private int _mazeSizeX;
+    private int _mazeSizeY;
     
     private MazeTileFactory _mazeTileFactory;
 
-    
-    
     private MazeTileModel[][] _mazeTiles;
 
     private MazeTileModel _currentTileModel;
@@ -29,13 +26,15 @@ namespace Modules.MapGenerator.Scripts
     {
       _mazeTileFactory = mazeTileFactory;
     }
-    private void Awake()
+    public void Init(int mazeSizeX, int mazeSizeY)
     {
+      _mazeSizeX = mazeSizeX;
+      _mazeSizeY = mazeSizeY;
       CreateTileModels();
       GenerateMaze();
     }
 
-    private void Start()
+    public void Draw() // TODO refactor
     {
       DrawTiles();
     }

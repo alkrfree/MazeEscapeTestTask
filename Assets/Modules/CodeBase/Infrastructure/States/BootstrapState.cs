@@ -25,7 +25,7 @@ namespace CodeBase.Infrastructure.States
 
     private void EnterLoadLevel()
     {
-      Debug.LogError("Level Loaded");
+      Debug.Log("Level Loaded");
       _stateMachine.Enter<LoadProgressState>();
     }
   }

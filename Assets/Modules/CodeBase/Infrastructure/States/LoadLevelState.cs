@@ -6,6 +6,7 @@ using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.StaticData;
 using CodeBase.StaticData;
 using CodeBase.UI.Services.Factory;
+using Modules.MapGenerator.Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,6 +21,7 @@ namespace CodeBase.Infrastructure.States
     private IPersistentProgressService _progressService;
     private IStaticDataService _staticData;
     private IUIFactory _uiFactory;
+    private MazeGenerator _mazeGenerator;
 
     public LoadLevelState(
       IGameStateMachine gameStateMachine,
@@ -28,7 +30,8 @@ namespace CodeBase.Infrastructure.States
       IGameFactory gameFactory,
       IPersistentProgressService progressService,
       IStaticDataService staticDataService,
-      IUIFactory uiFactory)
+      IUIFactory uiFactory,
+      MazeGenerator mazeGenerator)
     {
       _stateMachine = gameStateMachine;
       _sceneLoader = sceneLoader;
@@ -37,6 +40,7 @@ namespace CodeBase.Infrastructure.States
       _progressService = progressService;
       _staticData = staticDataService;
       _uiFactory = uiFactory;
+      _mazeGenerator = mazeGenerator;
     }
 
     public void Enter(string sceneName)
@@ -70,6 +74,8 @@ namespace CodeBase.Infrastructure.States
 
     private async Task InitGameWorld()
     {
+      _mazeGenerator.Init(10,10);
+      _mazeGenerator.Draw();
      // LevelStaticData levelData = LevelStaticData();
 
    //   await InitSpawners(levelData);

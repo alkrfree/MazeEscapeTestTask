@@ -2,19 +2,20 @@
 using Modules.MapGenerator.Data;
 using UnityEngine;
 using Zenject;
+using Object = System.Object;
 
 namespace Modules.MapGenerator.Scripts
 {
   public class MazeTileFactory
   {
-    private readonly MazeTileFactoryAttributes _attributes;
-    private readonly Transform _parent;
+    private readonly MazeTileFactoryData _data;
+    private readonly Transform _mazeParent;
     private readonly DiContainer _container;
 
-    public MazeTileFactory(MazeTileFactoryAttributes attributes, Transform parent, DiContainer container)
+    public MazeTileFactory(MazeTileFactoryData data, MazeParent mazeParent, DiContainer container)
     {
-      _attributes = attributes;
-      _parent = parent;
+      _data = data;
+      _mazeParent = mazeParent.transform;
       _container = container;
     }
 
@@ -30,11 +31,11 @@ namespace Modules.MapGenerator.Scripts
       switch (tileModel.Tile)
       {
         case MazeTileModel.TileType.Normal:
-          return _container.InstantiatePrefabForComponent<ITileView>(_attributes.mazeTileViewPrefab, _parent);
+          return _container.InstantiatePrefabForComponent<ITileView>(_data.mazeTileViewPrefab, _mazeParent);
         case MazeTileModel.TileType.Start:
-          return _container.InstantiatePrefabForComponent<ITileView>(_attributes.mazeTileViewStartPrefab, _parent);
+          return _container.InstantiatePrefabForComponent<ITileView>(_data.mazeTileViewStartPrefab, _mazeParent);
         case MazeTileModel.TileType.Finish:
-          return _container.InstantiatePrefabForComponent<ITileView>(_attributes.mazeTileViewFinishPrefab, _parent);
+          return _container.InstantiatePrefabForComponent<ITileView>(_data.mazeTileViewFinishPrefab, _mazeParent);
         default:
           throw new ArgumentOutOfRangeException();
       }

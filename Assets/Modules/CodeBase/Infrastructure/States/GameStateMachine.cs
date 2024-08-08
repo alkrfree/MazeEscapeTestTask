@@ -7,6 +7,7 @@ using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
+using Modules.MapGenerator.Scripts;
 using Zenject;
 
 namespace CodeBase.Infrastructure.States
@@ -23,13 +24,14 @@ namespace CodeBase.Infrastructure.States
       IPersistentProgressService progressService,
       IStaticDataService staticDataService,
       IUIFactory uiFactory,
-      ISaveLoadService saveLoadProgress
+      ISaveLoadService saveLoadProgress,
+      MazeGenerator mazeGenerator
     )
     {
       _states = new Dictionary<Type, IExitableState>
       {
         [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
-        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain, gameFactory, progressService, staticDataService, uiFactory),
+        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain, gameFactory, progressService, staticDataService, uiFactory,mazeGenerator),
 
         [typeof(LoadProgressState)] = new LoadProgressState(this, progressService, saveLoadProgress),
         [typeof(GameLoopState)] = new GameLoopState()
