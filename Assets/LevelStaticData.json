@@ -1,0 +1,229 @@
+{
+  "Levels": [
+    {
+      "LevelNum": 0,
+      "Enemies": [
+        {
+          "Id": "3930e063-359f-4e3a-95d7-b3b60f4cab05",
+          "TileCoords": {
+            "X": 0,
+            "Y": 0
+          },
+          "EnemyTypeId": 1,
+          "AdditionalAction": "<patrol tile1 = [1,1], tile2 = [1,3]>"
+        },
+        {
+          "Id": "05e901f8-ad9f-49bc-891d-60dfa48c6ced",
+          "TileCoords": {
+            "X": 0,
+            "Y": 0
+          },
+          "EnemyTypeId": 1,
+          "AdditionalAction": "<patrol tile1 = [1,1], tile2 = [1,3]>"
+        }
+      ],
+      "Tiles": [
+        {
+          "TileCoords": {
+            "X": 0,
+            "Y": 0
+          },
+          "Type": 1,
+          "CurrentDisabledWalls": 1
+        },
+        {
+          "TileCoords": {
+            "X": 0,
+            "Y": 1
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 6
+        },
+        {
+          "TileCoords": {
+            "X": 0,
+            "Y": 2
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 5
+        },
+        {
+          "TileCoords": {
+            "X": 0,
+            "Y": 3
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 7
+        },
+        {
+          "TileCoords": {
+            "X": 0,
+            "Y": 4
+          },
+          "Type": 2,
+          "CurrentDisabledWalls": 6
+        },
+        {
+          "TileCoords": {
+            "X": 1,
+            "Y": 0
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 4
+        },
+        {
+          "TileCoords": {
+            "X": 1,
+            "Y": 1
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 12
+        },
+        {
+          "TileCoords": {
+            "X": 1,
+            "Y": 2
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 12
+        },
+        {
+          "TileCoords": {
+            "X": 1,
+            "Y": 3
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 9
+        },
+        {
+          "TileCoords": {
+            "X": 1,
+            "Y": 4
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 6
+        },
+        {
+          "TileCoords": {
+            "X": 2,
+            "Y": 0
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 12
+        },
+        {
+          "TileCoords": {
+            "X": 2,
+            "Y": 1
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 12
+        },
+        {
+          "TileCoords": {
+            "X": 2,
+            "Y": 2
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 9
+        },
+        {
+          "TileCoords": {
+            "X": 2,
+            "Y": 3
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 2
+        },
+        {
+          "TileCoords": {
+            "X": 2,
+            "Y": 4
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 12
+        },
+        {
+          "TileCoords": {
+            "X": 3,
+            "Y": 0
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 12
+        },
+        {
+          "TileCoords": {
+            "X": 3,
+            "Y": 1
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 12
+        },
+        {
+          "TileCoords": {
+            "X": 3,
+            "Y": 2
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 5
+        },
+        {
+          "TileCoords": {
+            "X": 3,
+            "Y": 3
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 7
+        },
+        {
+          "TileCoords": {
+            "X": 3,
+            "Y": 4
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 14
+        },
+        {
+          "TileCoords": {
+            "X": 4,
+            "Y": 0
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 9
+        },
+        {
+          "TileCoords": {
+            "X": 4,
+            "Y": 1
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 11
+        },
+        {
+          "TileCoords": {
+            "X": 4,
+            "Y": 2
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 10
+        },
+        {
+          "TileCoords": {
+            "X": 4,
+            "Y": 3
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 1
+        },
+        {
+          "TileCoords": {
+            "X": 4,
+            "Y": 4
+          },
+          "Type": 0,
+          "CurrentDisabledWalls": 10
+        }
+      ]
+    }
+  ]
+}

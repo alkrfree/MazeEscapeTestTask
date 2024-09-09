@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic;
-using CodeBase.Services;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
-using Modules.MapGenerator.Scripts;
-using Zenject;
+using Modules.LevelGenerator.Scripts;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -25,15 +23,22 @@ namespace CodeBase.Infrastructure.States
       IStaticDataService staticDataService,
       IUIFactory uiFactory,
       ISaveLoadService saveLoadProgress,
-      MazeGenerator mazeGenerator
+      ILevelLoader levelLoader
     )
     {
       _states = new Dictionary<Type, IExitableState>
       {
         [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
-        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain, gameFactory, progressService, staticDataService, uiFactory,mazeGenerator),
-
         [typeof(LoadProgressState)] = new LoadProgressState(this, progressService, saveLoadProgress),
+        [typeof(LoadLevelState)] = new LoadLevelState(this,
+          sceneLoader,
+          loadingCurtain,
+          gameFactory,
+          progressService,
+          staticDataService,
+          uiFactory,
+          levelLoader),
+
         [typeof(GameLoopState)] = new GameLoopState()
       };
     }

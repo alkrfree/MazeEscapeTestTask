@@ -1,5 +1,4 @@
-﻿using CodeBase.Services.Input;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -16,8 +15,11 @@ namespace CodeBase.Infrastructure.States
       _sceneLoader = sceneLoader;
     }
 
-    public void Enter() =>
+
+    public void Enter()
+    {
       _sceneLoader.Load(Initial, onLoaded: EnterLoadLevel);
+    }
 
     public void Exit()
     {

@@ -21,8 +21,8 @@ namespace Modules.MapGenerator.Scripts
 
     private void SetPos(ITileModel mazeTileModel)
     {
-      Vector2Int coords = mazeTileModel.TileCoords;
-      transform.localPosition = new Vector2(coords.x * 1, coords.y * 1);
+      TileCoords coords = mazeTileModel.TileCoords;
+      transform.localPosition = new Vector2(coords.X * 1, coords.Y * 1);
     }
 
     private void DrawWalls(MazeTileModel.Direction direction)

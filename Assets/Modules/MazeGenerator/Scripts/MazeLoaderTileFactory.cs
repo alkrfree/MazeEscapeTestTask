@@ -2,17 +2,16 @@
 using Modules.MapGenerator.Data;
 using UnityEngine;
 using Zenject;
-using Object = System.Object;
 
 namespace Modules.MapGenerator.Scripts
 {
-  public class MazeTileFactory
+  public class MazeLoaderTileFactory
   {
     private readonly MazeTileFactoryData _data;
     private readonly Transform _mazeParent;
     private readonly DiContainer _container;
 
-    public MazeTileFactory(MazeTileFactoryData data, MazeParent mazeParent, DiContainer container)
+    public MazeLoaderTileFactory(MazeTileFactoryData data, MazeParent mazeParent, DiContainer container)
     {
       _data = data;
       _mazeParent = mazeParent.transform;
@@ -28,7 +27,7 @@ namespace Modules.MapGenerator.Scripts
 
     private ITileView GetTileInstance(ITileModel tileModel)
     {
-      switch (tileModel.Tile)
+      switch (tileModel.Type)
       {
         case MazeTileModel.TileType.Normal:
           return _container.InstantiatePrefabForComponent<ITileView>(_data.mazeTileViewPrefab, _mazeParent);

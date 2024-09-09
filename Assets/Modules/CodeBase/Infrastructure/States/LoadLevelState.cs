@@ -6,9 +6,9 @@ using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.StaticData;
 using CodeBase.StaticData;
 using CodeBase.UI.Services.Factory;
-using Modules.MapGenerator.Scripts;
+using Modules.LevelGenerator.Data;
+using Modules.LevelGenerator.Scripts;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -21,7 +21,7 @@ namespace CodeBase.Infrastructure.States
     private IPersistentProgressService _progressService;
     private IStaticDataService _staticData;
     private IUIFactory _uiFactory;
-    private MazeGenerator _mazeGenerator;
+    private ILevelLoader _levelLoader;
 
     public LoadLevelState(
       IGameStateMachine gameStateMachine,
@@ -31,7 +31,7 @@ namespace CodeBase.Infrastructure.States
       IPersistentProgressService progressService,
       IStaticDataService staticDataService,
       IUIFactory uiFactory,
-      MazeGenerator mazeGenerator)
+      ILevelLoader levelLoader)
     {
       _stateMachine = gameStateMachine;
       _sceneLoader = sceneLoader;
@@ -40,12 +40,13 @@ namespace CodeBase.Infrastructure.States
       _progressService = progressService;
       _staticData = staticDataService;
       _uiFactory = uiFactory;
-      _mazeGenerator = mazeGenerator;
+      _levelLoader = levelLoader;
     }
 
     public void Enter(string sceneName)
     {
       _loadingCurtain.Show();
+      //  _levelLoader.LoadLevelData();
       _gameFactory.Cleanup();
       _gameFactory.WarmUp();
       _sceneLoader.Load(sceneName, OnLoaded);
@@ -74,37 +75,39 @@ namespace CodeBase.Infrastructure.States
 
     private async Task InitGameWorld()
     {
-      _mazeGenerator.Init(10,10);
-      _mazeGenerator.Draw();
-     // LevelStaticData levelData = LevelStaticData();
+      //  _levelLoader.GenerateLevels();
+      //   _mazeGenerator.Init(10,10);
+      //   _mazeGenerator.Draw();
+      // LevelStaticData levelData = LevelStaticData();
 
-   //   await InitSpawners(levelData);
+      //   await InitSpawners(levelData);
       //   await InitLootPieces();
-     // GameObject hero = await InitHero(levelData);
-     // await InitLevelTransfer(levelData);
-    //  await InitHud(hero);
-   //   CameraFollow(hero); // TODO
+      // GameObject hero = await InitHero(levelData);
+      // await InitLevelTransfer(levelData);
+      //  await InitHud(hero);
+      //   CameraFollow(hero); // TODO
     }
 
-    private async Task InitSpawners(LevelStaticData levelStaticData)
+
+    /*private async Task InitSpawners(LevelStaticData levelStaticData)
     {
       foreach (EnemySpawnerStaticData spawnerData in levelStaticData.EnemySpawners)
-        await _gameFactory.CreateSpawner(spawnerData.Id, spawnerData.Position, spawnerData.MonsterTypeId);
-    }
+        await _gameFactory.CreateSpawner(spawnerData.Id, spawnerData.Position, spawnerData.EnemyTypeId);
+    }*/
 
-    private async Task<GameObject> InitHero(LevelStaticData levelStaticData) =>
+    /*private async Task<GameObject> InitHero(LevelStaticData levelStaticData) =>
       await _gameFactory.CreateHero(levelStaticData.InitialHeroPosition);
 
     private async Task InitLevelTransfer(LevelStaticData levelData) =>
-      await _gameFactory.CreateLevelTransfer(levelData.LevelTransfer.Position);
+      await _gameFactory.CreateLevelTransfer(levelData.LevelTransfer.Position);*/
 
     private async Task InitHud(GameObject hero)
     {
       GameObject hud = await _gameFactory.CreateHud();
     }
 
-    private LevelStaticData LevelStaticData() =>
-      _staticData.ForLevel(SceneManager.GetActiveScene().name);
+    private LevelSerializedData LevelStaticData() =>
+      _staticData.ForLevel(0);
 
     private void CameraFollow(GameObject hero) =>
       Camera.main.GetComponent<CameraFollow>().Follow(hero);

@@ -1,5 +1,5 @@
 ﻿using System;
-using UnityEngine;
+using Modules.LevelGenerator.Scripts;
 
 namespace Modules.MapGenerator.Scripts
 {
@@ -21,9 +21,9 @@ namespace Modules.MapGenerator.Scripts
       Start,
       Finish
     }
-    public Vector2Int TileCoords { get; }
+    public TileCoords TileCoords { get; }
     public bool IsVisited { get; set; }
-    public TileType Tile { get; set; }
+    public TileType Type { get; set; }
 
     public int TilesFromStart { get; set; }
 
@@ -35,9 +35,16 @@ namespace Modules.MapGenerator.Scripts
       set => _currentDisabledWalls |= value;
     }
 
-    public MazeTileModel(Vector2Int _tileCoords)
+    public MazeTileModel(int x, int y)
     {
-      TileCoords = _tileCoords;
+      TileCoords = new TileCoords(x,y);
+    }
+    
+    public MazeTileModel(TileSerializedData data)
+    {
+      TileCoords = new TileCoords(data.TileCoords.X,data.TileCoords.Y);
+      Type = data.Type;
+      _currentDisabledWalls = data.CurrentDisabledWalls;
     }
   }
 }
