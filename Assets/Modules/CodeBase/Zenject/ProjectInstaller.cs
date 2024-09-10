@@ -11,6 +11,7 @@ using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
 using CodeBase.UI.Services.Windows;
+using Modules.InputSystem.Scripts;
 using UnityEngine;
 using Zenject;
 
