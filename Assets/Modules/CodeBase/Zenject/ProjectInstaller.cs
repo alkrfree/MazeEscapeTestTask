@@ -23,15 +23,15 @@ public class ProjectInstaller : MonoInstaller
   {
     Container.Bind<IPersistentProgressService>().To<PersistentProgressService>().AsSingle();
     Container.Bind<ISaveLoadService>().To<SaveLoadService>().AsSingle();
-    Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
-    Container.Bind<IRandomService>().To<RandomService>().AsSingle();
-    Container.Bind<IWindowService>().To<WindowService>().AsSingle();
-    Container.Bind<IUIFactory>().To<UIFactory>().AsSingle();
-    Container.Bind<IAdsService>().To<AdsService>().AsSingle();
+ //   Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
+  //  Container.Bind<IRandomService>().To<RandomService>().AsSingle();
+//    Container.Bind<IWindowService>().To<WindowService>().AsSingle();
+ //   Container.Bind<IUIFactory>().To<UIFactory>().AsSingle();
+  //  Container.Bind<IAdsService>().To<AdsService>().AsSingle();
     Container.Bind<IGameStateMachine>().To<GameStateMachine>().AsSingle();
     Container.Bind<LoadingCurtain>().FromComponentInNewPrefab(CurtainPrefab).AsSingle().NonLazy();
     Container.Bind<SceneLoader>().AsSingle();
-    Container.Bind<IStaticDataService>().To<StaticDataService>().AsSingle();
+  //  Container.Bind<IStaticDataService>().To<StaticDataService>().AsSingle();
     Container.Bind<IInputService>().FromInstance(InputService()).AsSingle();
     Container.Bind<ICoroutineRunner>().To<GameBootstrapper>().FromComponentInNewPrefab(BootstrapperPrefab).AsSingle().NonLazy();
     
