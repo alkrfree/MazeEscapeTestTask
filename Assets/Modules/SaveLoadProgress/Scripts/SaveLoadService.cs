@@ -1,9 +1,8 @@
 using CodeBase.Data;
-using Modules.LoadProgress.Data;
-using Modules.LoadProgress.Scripts;
+using Modules.SaveLoadProgress.Data;
 using UnityEngine;
 
-namespace CodeBase.Services.SaveLoad
+namespace Modules.SaveLoadProgress.Scripts
 {
   public class SaveLoadService : ISaveLoadService
   {
@@ -23,13 +22,14 @@ namespace CodeBase.Services.SaveLoad
       /*foreach (ISavedProgress progressWriter in _gameFactory.ProgressWriters)
         progressWriter.UpdateProgress(_progressService.Progress);*/
       
-      PlayerPrefs.SetString(ProgressKey, _progressService.Progress.ToJson());
+    //  PlayerPrefs.SetString(ProgressKey, _progressService.Progress.ToJson());
     }
 
     public PlayerProgress LoadProgress()
     {
-      return PlayerPrefs.GetString(ProgressKey)?
-        .ToDeserialized<PlayerProgress>();
+      /*return PlayerPrefs.GetString(ProgressKey)?
+        .ToDeserialized<PlayerProgress>();*/
+      return null;
     }
   }
 }

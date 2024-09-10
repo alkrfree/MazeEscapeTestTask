@@ -5,7 +5,7 @@ using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
 using Modules.LevelGenerator.Data;
 using Modules.LevelGenerator.Scripts;
-using Modules.LoadProgress.Scripts;
+using Modules.SaveLoadProgress.Scripts;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
@@ -17,8 +17,8 @@ namespace CodeBase.Infrastructure.States
     private LoadingCurtain _loadingCurtain;
   //  private IGameFactory _gameFactory;
     private IPersistentProgressService _progressService;
-    private IStaticDataService _staticData;
-    private IUIFactory _uiFactory;
+    /*private IStaticDataService _staticData;
+    private IUIFactory _uiFactory;*/
     private ILevelLoader _levelLoader;
     private int _currentLevelNumber;
     
@@ -28,8 +28,8 @@ namespace CodeBase.Infrastructure.States
       LoadingCurtain loadingCurtain,
      // IGameFactory gameFactory,
       IPersistentProgressService progressService,
-      IStaticDataService staticDataService,
-      IUIFactory uiFactory,
+      /*IStaticDataService staticDataService,
+      IUIFactory uiFactory,*/
       ILevelLoader levelLoader)
     {
       _stateMachine = gameStateMachine;
@@ -37,8 +37,8 @@ namespace CodeBase.Infrastructure.States
       _loadingCurtain = loadingCurtain;
    //   _gameFactory = gameFactory;
       _progressService = progressService;
-      _staticData = staticDataService;
-      _uiFactory = uiFactory;
+      /*_staticData = staticDataService;
+      _uiFactory = uiFactory;*/
       _levelLoader = levelLoader;
     }
 
@@ -64,15 +64,17 @@ namespace CodeBase.Infrastructure.States
       _stateMachine.Enter<GameLoopState>();
     }
 
-    private async Task InitUIRoot() =>
-      await _uiFactory.CreateUIRoot();
-
+    private async Task InitUIRoot()
+    { 
+   
+    //  await _uiFactory.CreateUIRoot();
+    }
     /*private void InformProgressReaders()
     {
       foreach (ISavedProgressReader progressReader in _gameFactory.ProgressReaders)
         progressReader.LoadProgress(_progressService.Progress);
     }*/
-
+  
     private async Task InitGameWorld()
     {
       _levelLoader.GoToLevel(_currentLevelNumber);
@@ -107,10 +109,10 @@ namespace CodeBase.Infrastructure.States
       GameObject hud = await _gameFactory.CreateHud();
     }*/
 
-    private LevelSerializedData LevelStaticData() =>
+    /*private LevelSerializedData LevelStaticData() =>
       _staticData.ForLevel(0);
 
     private void CameraFollow(GameObject hero) =>
-      Camera.main.GetComponent<CameraFollow>().Follow(hero);
+      Camera.main.GetComponent<CameraFollow>().Follow(hero);*/
   }
 }

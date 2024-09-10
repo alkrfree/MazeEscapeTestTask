@@ -1,7 +1,7 @@
 using CodeBase.Services;
-using Modules.LoadProgress.Data;
+using Modules.SaveLoadProgress.Data;
 
-namespace Modules.LoadProgress.Scripts
+namespace Modules.SaveLoadProgress.Scripts
 {
   public interface IPersistentProgressService 
   {

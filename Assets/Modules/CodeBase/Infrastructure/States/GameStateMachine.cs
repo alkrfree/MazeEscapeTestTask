@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeBase.Logic;
-using CodeBase.Services.SaveLoad;
-using CodeBase.Services.StaticData;
-using CodeBase.UI.Services.Factory;
+/*using CodeBase.Services.StaticData;
+using CodeBase.UI.Services.Factory;*/
 using Modules.LevelGenerator.Scripts;
-using Modules.LoadProgress.Scripts;
+using Modules.SaveLoadProgress.Scripts;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -18,8 +17,8 @@ namespace CodeBase.Infrastructure.States
       SceneLoader sceneLoader,
       LoadingCurtain loadingCurtain,
       IPersistentProgressService progressService,
-      IStaticDataService staticDataService,
-      IUIFactory uiFactory,
+      /*IStaticDataService staticDataService,
+      IUIFactory uiFactory,*/
       ISaveLoadService saveLoadProgress,
       ILevelLoader levelLoader
     )
@@ -32,8 +31,8 @@ namespace CodeBase.Infrastructure.States
           sceneLoader,
           loadingCurtain,
           progressService,
-          staticDataService,
-          uiFactory,
+          /*staticDataService,
+          uiFactory,*/
           levelLoader),
 
         [typeof(GameLoopState)] = new GameLoopState()
