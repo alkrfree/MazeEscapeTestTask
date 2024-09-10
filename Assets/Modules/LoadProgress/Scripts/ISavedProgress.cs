@@ -1,6 +1,6 @@
-using CodeBase.Data;
+using Modules.LoadProgress.Data;
 
-namespace CodeBase.Services.PersistentProgress
+namespace Modules.LoadProgress.Scripts
 {
   public interface ISavedProgress : ISavedProgressReader
   {

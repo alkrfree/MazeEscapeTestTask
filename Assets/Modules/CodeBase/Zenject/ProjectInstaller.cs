@@ -1,17 +1,16 @@
 using CodeBase.Infrastructure;
 using CodeBase.Infrastructure.AssetManagement;
-using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.States;
 using CodeBase.Logic;
 using CodeBase.Services.Ads;
 using CodeBase.Services.Input;
-using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.Randomizer;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
 using CodeBase.UI.Services.Windows;
 using Modules.InputSystem.Scripts;
+using Modules.LoadProgress.Scripts;
 using UnityEngine;
 using Zenject;
 
@@ -24,7 +23,6 @@ public class ProjectInstaller : MonoInstaller
   {
     Container.Bind<IPersistentProgressService>().To<PersistentProgressService>().AsSingle();
     Container.Bind<ISaveLoadService>().To<SaveLoadService>().AsSingle();
-    Container.Bind<IGameFactory>().To<GameFactory>().AsSingle();
     Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
     Container.Bind<IRandomService>().To<RandomService>().AsSingle();
     Container.Bind<IWindowService>().To<WindowService>().AsSingle();

@@ -1,13 +1,11 @@
 ﻿using System.Threading.Tasks;
 using CodeBase.CameraLogic;
-using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic;
-using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.StaticData;
-using CodeBase.StaticData;
 using CodeBase.UI.Services.Factory;
 using Modules.LevelGenerator.Data;
 using Modules.LevelGenerator.Scripts;
+using Modules.LoadProgress.Scripts;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
@@ -17,7 +15,7 @@ namespace CodeBase.Infrastructure.States
     private readonly IGameStateMachine _stateMachine;
     private readonly SceneLoader _sceneLoader;
     private LoadingCurtain _loadingCurtain;
-    private IGameFactory _gameFactory;
+  //  private IGameFactory _gameFactory;
     private IPersistentProgressService _progressService;
     private IStaticDataService _staticData;
     private IUIFactory _uiFactory;
@@ -28,7 +26,7 @@ namespace CodeBase.Infrastructure.States
       IGameStateMachine gameStateMachine,
       SceneLoader sceneLoader,
       LoadingCurtain loadingCurtain,
-      IGameFactory gameFactory,
+     // IGameFactory gameFactory,
       IPersistentProgressService progressService,
       IStaticDataService staticDataService,
       IUIFactory uiFactory,
@@ -37,7 +35,7 @@ namespace CodeBase.Infrastructure.States
       _stateMachine = gameStateMachine;
       _sceneLoader = sceneLoader;
       _loadingCurtain = loadingCurtain;
-      _gameFactory = gameFactory;
+   //   _gameFactory = gameFactory;
       _progressService = progressService;
       _staticData = staticDataService;
       _uiFactory = uiFactory;
@@ -49,8 +47,8 @@ namespace CodeBase.Infrastructure.States
       _currentLevelNumber = levelNum;
       _loadingCurtain.Show();
      // _levelLoader.LoadLevelData();
-      _gameFactory.Cleanup();
-      _gameFactory.WarmUp();
+     // _gameFactory.Cleanup();
+    //  _gameFactory.WarmUp();
       _sceneLoader.Load(SceneNames.GameSceneName, OnLoaded);
     }
 
@@ -61,7 +59,7 @@ namespace CodeBase.Infrastructure.States
     {
       await InitUIRoot();
       await InitGameWorld();
-      InformProgressReaders();
+   //   InformProgressReaders();
 
       _stateMachine.Enter<GameLoopState>();
     }
@@ -69,11 +67,11 @@ namespace CodeBase.Infrastructure.States
     private async Task InitUIRoot() =>
       await _uiFactory.CreateUIRoot();
 
-    private void InformProgressReaders()
+    /*private void InformProgressReaders()
     {
       foreach (ISavedProgressReader progressReader in _gameFactory.ProgressReaders)
         progressReader.LoadProgress(_progressService.Progress);
-    }
+    }*/
 
     private async Task InitGameWorld()
     {
@@ -104,10 +102,10 @@ namespace CodeBase.Infrastructure.States
     private async Task InitLevelTransfer(LevelStaticData levelData) =>
       await _gameFactory.CreateLevelTransfer(levelData.LevelTransfer.Position);*/
 
-    private async Task InitHud(GameObject hero)
+    /*private async Task InitHud(GameObject hero)
     {
       GameObject hud = await _gameFactory.CreateHud();
-    }
+    }*/
 
     private LevelSerializedData LevelStaticData() =>
       _staticData.ForLevel(0);

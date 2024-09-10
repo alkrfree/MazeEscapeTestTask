@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic;
-using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
 using Modules.LevelGenerator.Scripts;
+using Modules.LoadProgress.Scripts;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -18,7 +17,6 @@ namespace CodeBase.Infrastructure.States
     public GameStateMachine(
       SceneLoader sceneLoader,
       LoadingCurtain loadingCurtain,
-      IGameFactory gameFactory,
       IPersistentProgressService progressService,
       IStaticDataService staticDataService,
       IUIFactory uiFactory,
@@ -33,7 +31,6 @@ namespace CodeBase.Infrastructure.States
         [typeof(LoadLevelState)] = new LoadLevelState(this,
           sceneLoader,
           loadingCurtain,
-          gameFactory,
           progressService,
           staticDataService,
           uiFactory,

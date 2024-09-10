@@ -1,8 +1,9 @@
-using CodeBase.Data;
+using CodeBase.Services;
+using Modules.LoadProgress.Data;
 
-namespace CodeBase.Services.PersistentProgress
+namespace Modules.LoadProgress.Scripts
 {
-  public interface IPersistentProgressService : IService
+  public interface IPersistentProgressService 
   {
     PlayerProgress Progress { get; set; }
   }
