@@ -19,8 +19,7 @@ namespace CodeBase.Infrastructure.States
     public void Enter()
     {
       LoadProgressOrInitNew();
-
-      _gameStateMachine.Enter<LoadLevelState, string>(_progressService.Progress.WorldData.PositionOnLevel.Level);
+      _gameStateMachine.Enter<LoadLevelState, int>(_progressService.Progress.LastLevel);
     }
 
     public void Exit()
@@ -36,7 +35,7 @@ namespace CodeBase.Infrastructure.States
 
     private PlayerProgress NewProgress()
     {
-      var progress = new PlayerProgress(initialLevel: "GameScene");
+      var progress = new PlayerProgress(initialLevel: 0);
       progress.PlayerStats.MovingSpeed = 5;
       return progress;
     }

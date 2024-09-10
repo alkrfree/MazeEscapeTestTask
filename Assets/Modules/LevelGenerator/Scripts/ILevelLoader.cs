@@ -3,5 +3,6 @@
   public interface ILevelLoader
   {
     public void LoadLevelData();
+    public void GoToLevel(int levelNum);
   }
 }

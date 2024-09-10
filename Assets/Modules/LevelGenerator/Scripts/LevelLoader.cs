@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using CodeBase.StaticData;
 using Modules.LevelGenerator.Data;
 using Modules.MapGenerator.Scripts;
 using Modules.Utils;
@@ -14,6 +13,7 @@ namespace Modules.LevelGenerator.Scripts
     private MazeLoaderTileFactory _tileFactory;
     private List<MazeTileModel> _mazeTileModels = new List<MazeTileModel>();
     private List<ITileView> _mazeTileViews = new List<ITileView>();
+    private LevelLoaderSerializedData cachedData;
 
     [Inject]
     private void Construct(MazeLoaderTileFactory tileFactory)
@@ -23,10 +23,13 @@ namespace Modules.LevelGenerator.Scripts
 
     public void LoadLevelData()
     {
-      LevelLoaderSerializedData data = JsonSerializer.DeserializeFromJson<LevelLoaderSerializedData>(LevelStaticDataPath);
-      CreateModels(data.Levels[0]);
+      cachedData = JsonSerializer.DeserializeFromJson<LevelLoaderSerializedData>(LevelStaticDataPath);
+    }
+
+    public void GoToLevel(int levelNum)
+    {
+      CreateModels(cachedData.Levels[levelNum]);
       DrawTiles();
-      
     }
 
     private void CreateModels(LevelSerializedData level)

@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
 {
-  public class LoadLevelState : IPayloadedState<string>
+  public class LoadLevelState : IPayloadedState<int>
   {
     private readonly IGameStateMachine _stateMachine;
     private readonly SceneLoader _sceneLoader;
@@ -22,7 +22,8 @@ namespace CodeBase.Infrastructure.States
     private IStaticDataService _staticData;
     private IUIFactory _uiFactory;
     private ILevelLoader _levelLoader;
-
+    private int _currentLevelNumber;
+    
     public LoadLevelState(
       IGameStateMachine gameStateMachine,
       SceneLoader sceneLoader,
@@ -43,13 +44,14 @@ namespace CodeBase.Infrastructure.States
       _levelLoader = levelLoader;
     }
 
-    public void Enter(string sceneName)
+    public void Enter(int levelNum)
     {
+      _currentLevelNumber = levelNum;
       _loadingCurtain.Show();
-      //  _levelLoader.LoadLevelData();
+     // _levelLoader.LoadLevelData();
       _gameFactory.Cleanup();
       _gameFactory.WarmUp();
-      _sceneLoader.Load(sceneName, OnLoaded);
+      _sceneLoader.Load(SceneNames.GameSceneName, OnLoaded);
     }
 
     public void Exit() =>
@@ -75,6 +77,7 @@ namespace CodeBase.Infrastructure.States
 
     private async Task InitGameWorld()
     {
+      _levelLoader.GoToLevel(_currentLevelNumber);
       //  _levelLoader.GenerateLevels();
       //   _mazeGenerator.Init(10,10);
       //   _mazeGenerator.Draw();
