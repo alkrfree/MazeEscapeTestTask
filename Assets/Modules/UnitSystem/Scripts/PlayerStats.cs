@@ -1,6 +1,6 @@
 using System;
 
-namespace CodeBase.Data
+namespace Modules.UnitSystem.Scripts
 {
   [Serializable]
   public class PlayerStats

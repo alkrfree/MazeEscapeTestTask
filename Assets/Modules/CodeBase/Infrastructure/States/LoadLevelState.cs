@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
-using CodeBase.CameraLogic;
+//using CodeBase.CameraLogic;
 using CodeBase.Logic;
-using CodeBase.Services.StaticData;
+/*using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
-using Modules.LevelGenerator.Data;
+using Modules.LevelGenerator.Data;*/
 using Modules.LevelGenerator.Scripts;
 using Modules.SaveLoadProgress.Scripts;
-using UnityEngine;
+//using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
 {

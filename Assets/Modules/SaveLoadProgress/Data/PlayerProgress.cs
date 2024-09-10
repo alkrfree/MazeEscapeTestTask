@@ -1,5 +1,5 @@
 using System;
-using CodeBase.Data;
+using Modules.UnitSystem.Scripts;
 
 namespace Modules.SaveLoadProgress.Data
 {

@@ -1,4 +1,3 @@
-using CodeBase.Data;
 using Modules.SaveLoadProgress.Data;
 using Modules.SaveLoadProgress.Scripts;
 

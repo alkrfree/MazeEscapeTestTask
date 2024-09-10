@@ -1,6 +1,4 @@
-using CodeBase.Data;
 using Modules.SaveLoadProgress.Data;
-using UnityEngine;
 
 namespace Modules.SaveLoadProgress.Scripts
 {
