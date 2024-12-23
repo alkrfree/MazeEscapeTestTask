@@ -1,7 +1,8 @@
 ﻿using System;
-using Modules.LevelGenerator.Scripts;
+//using Modules.LevelLoader.Data;
+using Modules.MazeGenerator.Scripts;
 
-namespace Modules.MapGenerator.Scripts
+namespace Modules.MazeGenerator.Scripts
 {
   public class MazeTileModel : ITileModel
   {
@@ -21,7 +22,7 @@ namespace Modules.MapGenerator.Scripts
       Start,
       Finish
     }
-    public TileCoords TileCoords { get; }
+    public TileCoords TileCoords { get; set; }
     public bool IsVisited { get; set; }
     public TileType Type { get; set; }
 
@@ -34,17 +35,21 @@ namespace Modules.MapGenerator.Scripts
       get => _currentDisabledWalls;
       set => _currentDisabledWalls |= value;
     }
+    
+    public MazeTileModel()
+    {
+    }
 
     public MazeTileModel(int x, int y)
     {
       TileCoords = new TileCoords(x,y);
     }
     
-    public MazeTileModel(TileSerializedData data)
+    /*public MazeTileModel(TileSerializedData data)
     {
       TileCoords = new TileCoords(data.TileCoords.X,data.TileCoords.Y);
       Type = data.Type;
       _currentDisabledWalls = data.CurrentDisabledWalls;
-    }
+    }*/
   }
 }

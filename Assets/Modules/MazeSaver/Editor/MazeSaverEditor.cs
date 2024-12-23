@@ -1,30 +1,29 @@
 using UnityEditor;
 using UnityEngine;
 
-
-namespace Modules.MapGenerator.Scripts
+namespace Modules.MazeSaver.Editor
 {
-  [CustomEditor(typeof(MazeGenerator))]
-  public class MazeGeneratorEditor : Editor
+  [CustomEditor(typeof(Scripts.MazeSaver))]
+  public class MazeSaverEditor : UnityEditor.Editor
   {
     public override void OnInspectorGUI()
     {
-      MazeGenerator mazeGenerator = (MazeGenerator)target;
+      Scripts.MazeSaver mazeSaver = (Scripts.MazeSaver)target;
       DrawDefaultInspector();
 
       GUILayout.Label("Custom Editor", EditorStyles.boldLabel);
 
       if (GUILayout.Button("Clear")) 
-        mazeGenerator.Clear();
+        mazeSaver.Clear();
 
       if (GUILayout.Button("Draw Maze")) 
-        mazeGenerator.Draw();
+        mazeSaver.Draw();
 
       DrawHorizontalLine(Color.grey);
       if (GUILayout.Button("Save To JSON")) 
-        mazeGenerator.SaveToJSON();
+        mazeSaver.SaveToJSON();
 
-      mazeGenerator.LevelNumber = EditorGUILayout.IntField("Level Number", mazeGenerator.LevelNumber);
+      mazeSaver.LevelNumber = EditorGUILayout.IntField("Level Number", mazeSaver.LevelNumber);
     }
 
     private void DrawHorizontalLine(Color color, int thickness = 1, int padding = 10)

@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class MazeParent : MonoBehaviour
+namespace Modules.MazeGenerator.Scripts
 {
+  public class MazeParent : MonoBehaviour
+  {
   
+  }
 }

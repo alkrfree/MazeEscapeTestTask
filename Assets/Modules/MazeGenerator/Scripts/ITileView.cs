@@ -1,4 +1,4 @@
-﻿namespace Modules.MapGenerator.Scripts
+﻿namespace Modules.MazeGenerator.Scripts
 {
   public interface ITileView
   {

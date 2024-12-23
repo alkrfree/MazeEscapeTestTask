@@ -1,4 +1,4 @@
-﻿namespace Modules.LevelGenerator.Scripts
+﻿namespace Modules.LevelLoader.Scripts
 {
   public interface ILevelLoader
   {

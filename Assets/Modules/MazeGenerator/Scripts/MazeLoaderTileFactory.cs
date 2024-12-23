@@ -1,9 +1,10 @@
 ﻿using System;
-using Modules.MapGenerator.Data;
+using Modules.MazeGenerator.Data;
+using Modules.MazeGenerator.Scripts;
 using UnityEngine;
 using Zenject;
 
-namespace Modules.MapGenerator.Scripts
+namespace Modules.MazeGenerator.Scripts
 {
   public class MazeLoaderTileFactory
   {

@@ -1,7 +1,7 @@
-﻿using Modules.MapGenerator.Scripts;
+﻿using Modules.MazeGenerator.Scripts;
 using UnityEngine;
 
-namespace Modules.MapGenerator.Data
+namespace Modules.MazeGenerator.Data
 {
   [CreateAssetMenu(fileName = "MazeData", menuName = "MazeGenerator/MazeData", order = 0)]
   public class MazeData : ScriptableObject

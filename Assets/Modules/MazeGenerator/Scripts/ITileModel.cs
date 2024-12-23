@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Modules.MazeGenerator.Scripts;
+using UnityEngine;
 
-namespace Modules.MapGenerator.Scripts
+namespace Modules.MazeGenerator.Scripts
 {
   public interface ITileModel
   {

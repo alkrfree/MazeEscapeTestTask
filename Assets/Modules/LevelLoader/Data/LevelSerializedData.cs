@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Modules.LevelGenerator.Scripts;
 
-namespace Modules.LevelGenerator.Data
+namespace Modules.LevelLoader.Data
 {
   
   [Serializable]

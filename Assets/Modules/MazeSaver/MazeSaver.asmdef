@@ -1,0 +1,18 @@
+{
+    "name": "MazeSaver",
+    "rootNamespace": "",
+    "references": [
+        "GUID:005210ab963698147af1d592d13fccfa",
+        "GUID:b19f3f3e364ba6c4a8af837e8fe5fd34",
+        "GUID:454a43fffe5d5344cb151f98eed03410"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

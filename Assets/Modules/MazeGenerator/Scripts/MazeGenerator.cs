@@ -1,18 +1,11 @@
-using System;
 using System.Collections.Generic;
-using CodeBase.StaticData;
-using Modules.LevelGenerator.Data;
-using Modules.LevelGenerator.Scripts;
-using Modules.Utils;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Modules.MapGenerator.Scripts
+namespace Modules.MazeGenerator.Scripts
 {
   public class MazeGenerator : MonoBehaviour
   {
-    private const string LevelStaticDataPath = "/LevelStaticData.json";
-
     public int MazeSizeX;
     public int MazeSizeY;
 
@@ -28,7 +21,9 @@ namespace Modules.MapGenerator.Scripts
 
     private Stack<MazeTileModel> _path = new Stack<MazeTileModel>();
     private List<MazeTileView> _allTiles = new List<MazeTileView>();
-    
+
+    public MazeTileModel[][] MazeTiles => _mazeTiles;
+
     public void Draw() // TODO refactor
     {
       Clear();
@@ -49,48 +44,9 @@ namespace Modules.MapGenerator.Scripts
       _currentTileModel = null;
     }
 
-    public void SaveToJSON()
-    {
-      List<EnemySerializedData> enemyData = new List<EnemySerializedData>();
-      for (int i = 0; i < 2; i++)
-      {
-        var enemy = new EnemySerializedData();
-
-        Guid newGuid = Guid.NewGuid();
-        enemy.Id = newGuid.ToString();
-
-        enemy.TileCoords = new TileCoords(0, 0);
-        enemy.EnemyTypeId = EnemyTypeId.Enemy;
-        enemy.AdditionalAction = "<patrol tile1 = [1,1], tile2 = [1,3]>";
-        enemyData.Add(enemy);
-      }
-
-      List<LevelSerializedData> levelData = new List<LevelSerializedData>();
-      LevelSerializedData level = new LevelSerializedData();
-
-      List<TileSerializedData> tiles = new List<TileSerializedData>();
-      for (int i = 0; i < _mazeTiles.Length; i++)
-      {
-        for (int j = 0; j < _mazeTiles[i].Length; j++)
-        {
-          tiles.Add(new TileSerializedData(_mazeTiles[i][j]));
-        }
-      }
-
-      level.Tiles = tiles;
-      level.LevelNum = LevelNumber;
-      level.Enemies = enemyData;
-      levelData.Add(level);
-
-      var data = new LevelLoaderSerializedData();
-      data.Levels = levelData;
-
-      JsonSerializer.SerializeToJson(data, LevelStaticDataPath);
-    }
-
     private void GenerateMaze()
     {
-      _currentTileModel = _mazeTiles[0][0];
+      _currentTileModel = MazeTiles[0][0];
       _currentTileModel.Type = MazeTileModel.TileType.Start;
       _path.Push(_currentTileModel);
 
@@ -104,24 +60,24 @@ namespace Modules.MapGenerator.Scripts
 
     private void SetFinishTile()
     {
-      MazeTileModel furthest = _mazeTiles[0][0];
+      MazeTileModel furthest = MazeTiles[0][0];
 
-      for (int i = 0; i < _mazeTiles.Length; i++)
+      for (int i = 0; i < MazeTiles.Length; i++)
       {
-        if (_mazeTiles[i][MazeSizeY - 1].TilesFromStart > furthest.TilesFromStart)
-          furthest = _mazeTiles[i][MazeSizeY - 1];
+        if (MazeTiles[i][MazeSizeY - 1].TilesFromStart > furthest.TilesFromStart)
+          furthest = MazeTiles[i][MazeSizeY - 1];
 
-        if (_mazeTiles[i][0].TilesFromStart > furthest.TilesFromStart)
-          furthest = _mazeTiles[i][0];
+        if (MazeTiles[i][0].TilesFromStart > furthest.TilesFromStart)
+          furthest = MazeTiles[i][0];
       }
 
-      for (int j = 0; j < _mazeTiles[0].Length; j++)
+      for (int j = 0; j < MazeTiles[0].Length; j++)
       {
-        if (_mazeTiles[MazeSizeX - 1][j].TilesFromStart > furthest.TilesFromStart)
-          furthest = _mazeTiles[MazeSizeX - 1][j];
+        if (MazeTiles[MazeSizeX - 1][j].TilesFromStart > furthest.TilesFromStart)
+          furthest = MazeTiles[MazeSizeX - 1][j];
 
-        if (_mazeTiles[0][j].TilesFromStart > furthest.TilesFromStart)
-          furthest = _mazeTiles[0][j];
+        if (MazeTiles[0][j].TilesFromStart > furthest.TilesFromStart)
+          furthest = MazeTiles[0][j];
       }
 
       furthest.Type = MazeTileModel.TileType.Finish;
@@ -228,7 +184,7 @@ namespace Modules.MapGenerator.Scripts
       if (IsInMazeBorders(x, y))
         return false;
 
-      MazeTileModel tileModel = _mazeTiles[x][y];
+      MazeTileModel tileModel = MazeTiles[x][y];
 
       return !tileModel.IsVisited;
     }
@@ -256,7 +212,7 @@ namespace Modules.MapGenerator.Scripts
           break;
       }
 
-      return _mazeTiles[nextCellCoords.x][nextCellCoords.y];
+      return MazeTiles[nextCellCoords.x][nextCellCoords.y];
     }
 
     private MazeTileModel.Direction GetRandomTargetDirection(List<MazeTileModel.Direction> validCoords)
@@ -270,22 +226,22 @@ namespace Modules.MapGenerator.Scripts
     private void CreateTileModels()
     {
       _mazeTiles = new MazeTileModel[MazeSizeX][];
-      for (int i = 0; i < _mazeTiles.Length; i++)
+      for (int i = 0; i < MazeTiles.Length; i++)
       {
-        _mazeTiles[i] = new MazeTileModel[MazeSizeY];
-        for (int j = 0; j < _mazeTiles[i].Length; j++)
-          _mazeTiles[i][j] = new MazeTileModel(i, j);
+        MazeTiles[i] = new MazeTileModel[MazeSizeY];
+        for (int j = 0; j < MazeTiles[i].Length; j++)
+          MazeTiles[i][j] = new MazeTileModel(i, j);
       }
     }
 
 
     private void DrawTiles()
     {
-      for (int i = 0; i < _mazeTiles.Length; i++)
+      for (int i = 0; i < MazeTiles.Length; i++)
       {
-        for (int j = 0; j < _mazeTiles[i].Length; j++)
+        for (int j = 0; j < MazeTiles[i].Length; j++)
         {
-          _allTiles.Add(MazeGeneratorTileFactory.Spawn(_mazeTiles[i][j]));
+          _allTiles.Add(MazeGeneratorTileFactory.Spawn(MazeTiles[i][j]));
         }
       }
     }

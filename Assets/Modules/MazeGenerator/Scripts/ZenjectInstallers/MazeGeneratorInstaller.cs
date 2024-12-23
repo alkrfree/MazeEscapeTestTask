@@ -1,39 +1,31 @@
-using Modules.LevelGenerator.Scripts;
-using Modules.MapGenerator.Data;
-using Modules.MapGenerator.Scripts;
+using Modules.MazeGenerator.Data;
 using UnityEngine;
 using Zenject;
 
-public class MazeGeneratorInstaller : MonoInstaller
+namespace Modules.MazeGenerator.Scripts.ZenjectInstallers
 {
-  [SerializeField] private MazeTileFactoryData mazeTileFactoryData;
-  [SerializeField] private GameObject _mazeParent;
-
-  public override void InstallBindings()
+  public class MazeGeneratorInstaller : MonoInstaller
   {
-    BindMazeGenerator();
-    BindMazeTileFactories();
-    RegisterLevelLoader();
-    Debug.Log("MazeGeneratorInstaller");
+    [SerializeField] private MazeTileFactoryData mazeTileFactoryData;
+    [SerializeField] private GameObject _mazeParent;
+
+    public override void InstallBindings()
+    {
+      BindMazeGenerator();
+      BindMazeTileFactories();
+      Debug.Log("MazeGeneratorInstaller");
+    }
+    
+    private void BindMazeGenerator()
+    {
+      Container.Bind<MazeParent>().FromComponentInNewPrefab(_mazeParent).AsSingle().NonLazy();
+    }
+
+    private void BindMazeTileFactories()
+    {
+      Container.Bind<MazeTileFactoryData>().FromScriptableObject(mazeTileFactoryData).AsSingle();
+      Container.Bind<MazeLoaderTileFactory>().FromNew().AsSingle();
+    }
 
   }
-
-  private void RegisterLevelLoader()
-  {
-    Container.Bind<ILevelLoader>().To<LevelLoader>().AsSingle();
-    ILevelLoader levelLoader = Container.Resolve<ILevelLoader>();
-    levelLoader.LoadLevelData();
-  }
-
-  private void BindMazeGenerator()
-  {
-    Container.Bind<MazeParent>().FromComponentInNewPrefab(_mazeParent).AsSingle().NonLazy();
-  }
-
-  private void BindMazeTileFactories()
-  {
-    Container.Bind<MazeTileFactoryData>().FromScriptableObject(mazeTileFactoryData).AsSingle();
-    Container.Bind<MazeLoaderTileFactory>().FromNew().AsSingle();
-  }
-
 }

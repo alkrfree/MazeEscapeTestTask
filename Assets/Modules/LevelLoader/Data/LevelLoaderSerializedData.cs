@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Modules.LevelGenerator.Data
+namespace Modules.LevelLoader.Data
 {
   [Serializable]
   public class LevelLoaderSerializedData

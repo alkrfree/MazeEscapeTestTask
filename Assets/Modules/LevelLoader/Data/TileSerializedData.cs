@@ -1,7 +1,7 @@
 ﻿using System;
-using Modules.MapGenerator.Scripts;
+using Modules.MazeGenerator.Scripts;
 
-namespace Modules.LevelGenerator.Scripts
+namespace Modules.LevelLoader.Data
 {
   [Serializable]
   public class TileSerializedData

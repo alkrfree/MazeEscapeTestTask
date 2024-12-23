@@ -1,8 +1,9 @@
 ﻿using System;
-using Modules.MapGenerator.Data;
+using Modules.MazeGenerator.Data;
+using Modules.MazeGenerator.Scripts;
 using UnityEngine;
 
-namespace Modules.MapGenerator.Scripts
+namespace Modules.MazeGenerator.Scripts
 {
   public class MazeGeneratorTileFactory : MonoBehaviour
   {

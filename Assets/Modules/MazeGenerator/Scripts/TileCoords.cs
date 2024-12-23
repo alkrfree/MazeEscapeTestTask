@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Modules.MapGenerator.Scripts
+namespace Modules.MazeGenerator.Scripts
 {
   [Serializable]
   public class TileCoords

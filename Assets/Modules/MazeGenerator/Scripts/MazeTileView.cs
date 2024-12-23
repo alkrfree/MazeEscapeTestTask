@@ -1,7 +1,8 @@
-﻿using UnityEditor;
+﻿using Modules.MazeGenerator.Scripts;
+using UnityEditor;
 using UnityEngine;
 
-namespace Modules.MapGenerator.Scripts
+namespace Modules.MazeGenerator.Scripts
 {
   public class MazeTileView : MonoBehaviour, ITileView
   {
